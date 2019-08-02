@@ -2,7 +2,11 @@
 	"name": "awaitless",
 	"version": "1.0.0",
 	"description": "A promise utility module for projects that have access to Promises, but do not have access to async-await.",
-	"main": "./dist/index.js",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlee-onfleet/awaitless.git"
+  },
 	"scripts": {
     "build": "tsc --build",
 		"format": "prettier ./**/*.ts -l",
