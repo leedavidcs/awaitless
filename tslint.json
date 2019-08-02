@@ -1,0 +1,15 @@
+{
+	"extends": ["tslint:recommended", "tslint-config-prettier"],
+	"linterOptions": {
+		"exclude": ["coverage/**", "node_modules/**", "test-reports/**", "**/*.{js,jsx}"]
+	},
+	"rules": {
+		"align": [false],
+		"curly": [true, "ignore-same-line"],
+		"max-classes-per-file": false,
+		"max-line-length": [true, 100],
+		"no-console": true,
+		"semicolon": [true, "always"],
+		"trailing-comma": false
+	}
+}
