@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2019-08-01
+### Fixed
+- Fixed the built modules not being published to npm.
+
 ## [1.0.1] - 2019-08-01
 ### Added
 - Added repository to package.json
@@ -14,5 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added toPromise, map and chain utilities.
 
-[Unreleased]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.0...v1.0.1
