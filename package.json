@@ -3,6 +3,7 @@
 	"version": "1.0.2",
 	"description": "A promise utility module for projects that have access to Promises, but do not have access to async-await.",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/dlee-onfleet/awaitless.git"
