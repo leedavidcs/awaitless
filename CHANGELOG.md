@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2019-08-01
+### Added
+- Added repository to package.json
+
 ## 1.0.0 - 2019-08-01
 ### Added
 - Added toPromise, map and chain utilities.
+
+[Unreleased]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.0...v1.0.1
