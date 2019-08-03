@@ -1,6 +1,11 @@
+interface IChainPromiseFuncOps<A extends { [key: string]: any }, T = any> {
+	$assign: (key: keyof Partial<A>, value: T) => void;
+	$break: (value: T) => IBreakValue<T>;
+}
+
 type ChainPromiseFunc<A extends { [key: string]: any }, T> = (
 	acc: Partial<A>,
-	$break: (value: T) => IBreakValue<T>
+	ops: IChainPromiseFuncOps<A, T>
 ) => T | Promise<T> | IBreakValue<T>;
 
 type ChainAccumulator<A extends { [key in keyof Partial<A>]: any }> = {
@@ -23,7 +28,7 @@ const isChainAccumulator = <A extends { [key in keyof Partial<A>]: any }>(
 const isBreak = <T = any>(value): value is IBreakValue<T> =>
 	typeof value === "object" && value.__$break;
 
-const breakChain = <T>(breakValue: T): IBreakValue<T> => ({ __$break: true, breakValue });
+const $break = <T>(breakValue: T): IBreakValue<T> => ({ __$break: true, breakValue });
 
 export const chain = <A extends { [key: string]: any }, R>(
 	promiseFuncs: Array<ChainPromiseFunc<A, any> | ChainAccumulator<A>>
@@ -41,13 +46,20 @@ export const chain = <A extends { [key: string]: any }, R>(
 		return isOutOfFunc ? null : promiseFuncs[index];
 	};
 
+	const $assign: IChainPromiseFuncOps<A, A[keyof A]>["$assign"] = (
+		key: keyof A,
+		value: A[keyof A]
+	) => (results[key] = value);
+
+	const funcOps: IChainPromiseFuncOps<A, A[keyof A]> = { $assign, $break };
+
 	const iterablePromiseFn = (fn: ChainPromiseFunc<A, any> | ChainAccumulator<A>) => {
 		return new Promise((resolve, reject) => {
 			const nextFn = getNextFn();
 
 			if (isChainAccumulator<A>(fn)) {
 				const keys: Array<keyof A> = Object.keys(fn);
-				const fnResults = keys.map((key) => fn[key](results, breakChain));
+				const fnResults = keys.map((key) => fn[key](results, funcOps));
 
 				return Promise.all<A[keyof A]>(fnResults as any)
 					.then((values) => {
@@ -65,7 +77,7 @@ export const chain = <A extends { [key: string]: any }, R>(
 			}
 
 			if (isChainPromiseFunc<A>(fn)) {
-				const result = fn(results, breakChain);
+				const result = fn(results, funcOps);
 
 				if (isBreak<A[keyof A]>(result)) {
 					return resolve(result.breakValue);

@@ -28,7 +28,7 @@ describe("chain", () => {
 	});
 
 	it("Should chain and return a break value", () => {
-		return chain<{}, string>([(__, $break) => $break("Cat"), () => "Dog"]).then((result) =>
+		return chain<{}, string>([(__, { $break }) => $break("Cat"), () => "Dog"]).then((result) =>
 			expect(result).toBe("Cat")
 		);
 	});
@@ -40,11 +40,29 @@ describe("chain", () => {
 	});
 
 	it("Should throw an error if the accumulator invokes breakChain", () => {
-		return chain<{}, string>([
+		return chain<{ thing0: string }, string>([
 			{
-				thing0: (__, $break) => $break("This is a bad break call")
+				thing0: (__, { $break }) => $break("This is a bad break call")
 			}
 		]).catch((err) => expect(err).not.toBe(null));
+	});
+
+	it("Should assign to the accumulator intermediately", () => {
+		expect.assertions(1);
+
+		return chain<{
+			thing0: string;
+			thing1: string;
+		}, string>([
+			{
+				thing0: (__, { $assign }) => new Promise((resolve) => {
+					$assign("thing1", "Dog");
+
+					setTimeout(() => resolve("Cat"), 1000);
+				})
+			},
+			({ thing1 }) => expect(thing1).toBe("Dog")
+		]);
 	});
 
 	it("Should still resolve if the parameter array is empty", () => {

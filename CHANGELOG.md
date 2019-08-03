@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2019-08-02
+### Changed
+- Changed the second parameter to chain functions to be an object.
+
+### Added
+- Added `$assign` to chain functions, so that values can be stored intermediately outside of the accumulator.
+
 ## [1.0.2] - 2019-08-01
 ### Fixed
 - Fixed the built modules not being published to npm.
@@ -19,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added toPromise, map and chain utilities.
 
-[Unreleased]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/dlee-onfleet/awaitless/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.0...v1.0.1
