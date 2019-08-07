@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var isChainPromiseFunc = function (value) { return typeof value === "function"; };
 var isChainAccumulator = function (value) { return typeof value === "object" && typeof value !== "function"; };
 var isBreak = function (value) {
-    return typeof value === "object" && value.__$break;
+    return Boolean(value) && typeof value === "object" && value.__$break;
 };
 var $break = function (breakValue) { return ({ __$break: true, breakValue: breakValue }); };
 exports.chain = function (promiseFuncs) {
