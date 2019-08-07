@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.2] - 2019-08-07
+### Fixed
+- Fixed bad chain error when a promise resolves to null.
+
 ## [1.1.1] - 2019-08-06
 ### Fixed
 - Concurrency not resolving for map.
@@ -30,7 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added toPromise, map and chain utilities.
 
-[Unreleased]: https://github.com/leedavidcs/awaitless/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/leedavidcs/awaitless/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/leedavidcs/awaitless/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/leedavidcs/awaitless/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/dlee-onfleet/awaitless/compare/v1.0.1...v1.0.2
