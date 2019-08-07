@@ -26,7 +26,7 @@ const isChainAccumulator = <A extends { [key in keyof Partial<A>]: any }>(
 ): value is ChainAccumulator<A> => typeof value === "object" && typeof value !== "function";
 
 const isBreak = <T = any>(value): value is IBreakValue<T> =>
-	typeof value === "object" && value.__$break;
+	Boolean(value) && typeof value === "object" && value.__$break;
 
 const $break = <T>(breakValue: T): IBreakValue<T> => ({ __$break: true, breakValue });
 
