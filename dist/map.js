@@ -21,13 +21,13 @@ exports.map = function (items, mapFn, options) {
     }
     var results = Array(items.length).fill(null);
     var trueConcurrencyLimit = Math.min(items.length, concurrency);
-    var index = trueConcurrencyLimit - 1;
+    var index;
     var iterablePromiseFn = function (item, i) {
         return new Promise(function (resolve, reject) {
             return mapFn(item)
                 .then(function (result) {
                 results[i] = result;
-                var isOutOfItems = ++index === items.length;
+                var isOutOfItems = index++ >= items.length - 1;
                 return isOutOfItems
                     ? resolve()
                     : resolve(iterablePromiseFn(items[index], index));
@@ -37,7 +37,10 @@ exports.map = function (items, mapFn, options) {
     };
     var rateLimitedProcessor = Array(trueConcurrencyLimit)
         .fill(null)
-        .map(function (__, i) { return iterablePromiseFn(items[i], i); });
+        .map(function (__, i) {
+        index = i;
+        return iterablePromiseFn(items[i], i);
+    });
     return Promise.all(rateLimitedProcessor).then(function () { return results; });
 };
 //# sourceMappingURL=map.js.map

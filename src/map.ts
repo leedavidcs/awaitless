@@ -22,7 +22,8 @@ export const map = <I, R>(
 
 	const results: R[] = Array(items.length).fill(null);
 	const trueConcurrencyLimit: number = Math.min(items.length, concurrency);
-	let index: number = trueConcurrencyLimit - 1;
+
+	let index: number;
 
 	const iterablePromiseFn = (item: I, i: number) =>
 		new Promise<R>((resolve, reject) =>
@@ -30,7 +31,7 @@ export const map = <I, R>(
 				.then((result) => {
 					results[i] = result;
 
-					const isOutOfItems: boolean = ++index === items.length;
+					const isOutOfItems: boolean = index++ >= items.length - 1;
 
 					return isOutOfItems
 						? resolve()
@@ -41,7 +42,11 @@ export const map = <I, R>(
 
 	const rateLimitedProcessor = Array(trueConcurrencyLimit)
 		.fill(null)
-		.map((__, i) => iterablePromiseFn(items[i], i));
+		.map((__, i) => {
+			index = i;
+
+			return iterablePromiseFn(items[i], i);
+		});
 
 	return Promise.all(rateLimitedProcessor).then(() => results);
 };

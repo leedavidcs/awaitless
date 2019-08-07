@@ -50,16 +50,20 @@ describe("chain", () => {
 	it("Should assign to the accumulator intermediately", () => {
 		expect.assertions(1);
 
-		return chain<{
-			thing0: string;
-			thing1: string;
-		}, string>([
+		return chain<
 			{
-				thing0: (__, { $assign }) => new Promise((resolve) => {
-					$assign("thing1", "Dog");
+				thing0: string;
+				thing1: string;
+			},
+			string
+		>([
+			{
+				thing0: (__, { $assign }) =>
+					new Promise((resolve) => {
+						$assign("thing1", "Dog");
 
-					setTimeout(() => resolve("Cat"), 1000);
-				})
+						setTimeout(() => resolve("Cat"), 1000);
+					})
 			},
 			({ thing1 }) => expect(thing1).toBe("Dog")
 		]);

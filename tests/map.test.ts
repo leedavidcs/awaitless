@@ -20,4 +20,16 @@ describe("map", () => {
 			.then(mock)
 			.then(() => expect(mock).toBeCalled());
 	});
+
+	it("Should map concurrently", () => {
+		expect.assertions(1);
+
+		return map(
+			[100, 200, 300],
+			(value) => new Promise((resolve) => setTimeout(() => resolve(value), value)),
+			{ concurrency: 2 }
+		).then((result) => {
+			expect(result).toStrictEqual([100, 200, 300]);
+		});
+	});
 });
