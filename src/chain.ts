@@ -79,14 +79,16 @@ export const chain = <A extends { [key: string]: any }, R>(
 			if (isChainPromiseFunc<A>(fn)) {
 				const result = fn(results, funcOps);
 
-				if (isBreak<A[keyof A]>(result)) {
-					return resolve(result.breakValue);
-				}
+				return Promise.resolve(result).then((resolvedResult) => {
+					if (isBreak<A[keyof A]>(resolvedResult)) {
+						return resolve(resolvedResult.breakValue);
+					}
 
-				return nextFn ? resolve(iterablePromiseFn(nextFn)) : resolve(result);
+					return nextFn ? resolve(iterablePromiseFn(nextFn)) : resolve(result);
+				});
 			}
 
-			reject("Values must either be an object or a function");
+			return reject("Values must either be an object or a function");
 		});
 	};
 

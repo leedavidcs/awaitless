@@ -28,9 +28,22 @@ describe("chain", () => {
 	});
 
 	it("Should chain and return a break value", () => {
-		return chain<{}, string>([(__, { $break }) => $break("Cat"), () => "Dog"]).then((result) =>
-			expect(result).toBe("Cat")
-		);
+		expect.assertions(2);
+
+		const mock: jest.Mock = jest.fn();
+
+		return chain<{}, string>([
+			(__, { $break }) =>
+				new Promise((resolve) => setTimeout(resolve, 1000)).then(() => $break("Cat")),
+			(__, { $break }) => $break("Giraffe"),
+			() => {
+				mock();
+				return "Dog";
+			}
+		]).then((result) => {
+			expect(result).toBe("Cat");
+			expect(mock).not.toBeCalled();
+		});
 	});
 
 	it("Should throw an error if bad type is provided", () => {
