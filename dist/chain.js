@@ -37,13 +37,15 @@ exports.chain = function (promiseFuncs) {
                     .catch(reject);
             }
             if (isChainPromiseFunc(fn)) {
-                var result = fn(results, funcOps);
-                if (isBreak(result)) {
-                    return resolve(result.breakValue);
-                }
-                return nextFn ? resolve(iterablePromiseFn(nextFn)) : resolve(result);
+                var result_1 = fn(results, funcOps);
+                return Promise.resolve(result_1).then(function (resolvedResult) {
+                    if (isBreak(resolvedResult)) {
+                        return resolve(resolvedResult.breakValue);
+                    }
+                    return nextFn ? resolve(iterablePromiseFn(nextFn)) : resolve(result_1);
+                });
             }
-            reject("Values must either be an object or a function");
+            return reject("Values must either be an object or a function");
         });
     };
     return iterablePromiseFn(promiseFuncs[index]);
