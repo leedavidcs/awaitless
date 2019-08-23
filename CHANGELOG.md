@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2019-08-23
+### Added
+- Added forEach.
+
+### Changed
+- Changed map to also have an index as a second parameter to the map function.
+
 ## [1.1.3] - 2019-08-08
 ### Fixed
 - Fixed chain not halting execution when  has been resolved in a Promise.
@@ -38,7 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added toPromise, map and chain utilities.
 
-[Unreleased]: https://github.com/leedavidcs/awaitless/compare/v1.1.3...HEAD
+[Unreleased]: https://github.com/leedavidcs/awaitless/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/leedavidcs/awaitless/compare/v1.1.3...v1.2.0
 [1.1.3]: https://github.com/leedavidcs/awaitless/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/leedavidcs/awaitless/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/leedavidcs/awaitless/compare/v1.1.0...v1.1.1
