@@ -12,12 +12,12 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
   import awaitless from "awaitless";
   
   /**
-      * These exist:
-      * - awaitless.chain
-      * - awaitless.forEach
-      * - awaitless.map
-      * - awaitless.toPromise
-      */
+   * These exist:
+   * - awaitless.chain
+   * - awaitless.forEach
+   * - awaitless.map
+   * - awaitless.toPromise
+   */
   
   awaitless([
       {
