@@ -19,12 +19,12 @@ describe("chain", () => {
 			},
 			({ thing0, thing2 }) => expect(`${thing0}${thing2}`).toBe("CatGiraffe"),
 			{
-				thing3: () => "Camel",
+				thing3: ({ thing0 }) => `${thing0}fish`,
 				thing4: () => new Promise((resolve) => setTimeout(() => resolve("Turtle"), 1000))
 			},
 			({ thing0, thing1, thing2, thing3, thing4 }) =>
 				`${thing0}${thing1}${thing2}${thing3}${thing4}`
-		]).then((result) => expect(result).toBe("CatDogGiraffeCamelTurtle"));
+		]).then((result) => expect(result).toBe("CatDogGiraffeCatfishTurtle"));
 	});
 
 	it("Should chain and return a break value", () => {

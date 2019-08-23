@@ -12,6 +12,8 @@ type ChainAccumulator<A extends { [key in keyof Partial<A>]: any }> = {
 	[key in keyof Partial<A>]: ChainPromiseFunc<A, A[key]>;
 };
 
+type PromiseFuncs<A> = Array<ChainPromiseFunc<A, any> | ChainAccumulator<A>>;
+
 export interface IBreakValue<T> {
 	__$break: true;
 	breakValue: T;
@@ -31,7 +33,7 @@ const isBreak = <T = any>(value): value is IBreakValue<T> =>
 const $break = <T>(breakValue: T): IBreakValue<T> => ({ __$break: true, breakValue });
 
 export const chain = <A extends { [key: string]: any }, R>(
-	promiseFuncs: Array<ChainPromiseFunc<A, any> | ChainAccumulator<A>>
+	promiseFuncs: PromiseFuncs<A>
 ): Promise<R> => {
 	if (promiseFuncs.length === 0) {
 		return new Promise((resolve) => resolve());

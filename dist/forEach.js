@@ -14,19 +14,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var DEFAULT_OPTIONS = {
     concurrency: 1
 };
-exports.map = function (items, mapFn, options) {
+exports.forEach = function (items, forEachFn, options) {
     var concurrency = __assign({}, DEFAULT_OPTIONS, options).concurrency;
     if (items.length === 0) {
-        return new Promise(function (resolve) { return resolve([]); });
+        return new Promise(function (resolve) { return resolve(); });
     }
-    var results = Array(items.length).fill(null);
     var trueConcurrencyLimit = Math.min(items.length, concurrency);
     var index;
     var iterablePromiseFn = function (item, i) {
         return new Promise(function (resolve, reject) {
-            return mapFn(item, i)
-                .then(function (result) {
-                results[i] = result;
+            return forEachFn(item, i)
+                .then(function () {
                 var isOutOfItems = index++ >= items.length - 1;
                 return isOutOfItems
                     ? resolve()
@@ -41,6 +39,6 @@ exports.map = function (items, mapFn, options) {
         index = i;
         return iterablePromiseFn(items[i], i);
     });
-    return Promise.all(rateLimitedProcessor).then(function () { return results; });
+    return Promise.all(rateLimitedProcessor).then();
 };
-//# sourceMappingURL=map.js.map
+//# sourceMappingURL=forEach.js.map

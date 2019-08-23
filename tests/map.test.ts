@@ -2,13 +2,22 @@ import { map } from "../src";
 
 describe("map", () => {
 	it("Should map successfully", () => {
+		expect.assertions(2);
+
+		const mock: jest.Mock = jest.fn();
+
 		return map(
 			["Cat", "Dog", "Giraffe"],
 			(item) =>
-				new Promise<string>((resolve) => setTimeout(() => resolve(`Mapped_${item}`), 1000))
-		).then((mappedItems) =>
-			expect(mappedItems).toEqual(["Mapped_Cat", "Mapped_Dog", "Mapped_Giraffe"])
-		);
+				new Promise<string>((resolve) => {
+					mock();
+
+					setTimeout(() => resolve(`Mapped_${item}`), 1000);
+				})
+		).then((mappedItems) => {
+			expect(mappedItems).toStrictEqual(["Mapped_Cat", "Mapped_Dog", "Mapped_Giraffe"]);
+			expect(mock).toBeCalledTimes(3);
+		});
 	});
 
 	it("Should still resolve if the items array is empty", () => {
@@ -25,11 +34,11 @@ describe("map", () => {
 		expect.assertions(1);
 
 		return map(
-			[100, 200, 300],
+			[300, 200, 100],
 			(value) => new Promise((resolve) => setTimeout(() => resolve(value), value)),
 			{ concurrency: 2 }
 		).then((result) => {
-			expect(result).toStrictEqual([100, 200, 300]);
+			expect(result).toStrictEqual([300, 200, 100]);
 		});
 	});
 });

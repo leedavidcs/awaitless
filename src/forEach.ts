@@ -1,36 +1,33 @@
-interface IMapOptions {
+interface IForEachOptions {
 	concurrency: number;
 }
 
-const DEFAULT_OPTIONS: IMapOptions = {
+const DEFAULT_OPTIONS: IForEachOptions = {
 	concurrency: 1
 };
 
-export const map = <I, R>(
+export const forEach = <I>(
 	items: I[],
-	mapFn: (item: I, index: number) => Promise<R>,
-	options?: Partial<IMapOptions>
-): Promise<R[]> => {
-	const { concurrency }: IMapOptions = {
+	forEachFn: (item: I, index: number) => Promise<any>,
+	options?: Partial<IForEachOptions>
+): Promise<void> => {
+	const { concurrency }: IForEachOptions = {
 		...DEFAULT_OPTIONS,
 		...options
 	};
 
 	if (items.length === 0) {
-		return new Promise((resolve) => resolve([]));
+		return new Promise((resolve) => resolve());
 	}
 
-	const results: R[] = Array(items.length).fill(null);
 	const trueConcurrencyLimit: number = Math.min(items.length, concurrency);
 
 	let index: number;
 
 	const iterablePromiseFn = (item: I, i: number) =>
-		new Promise<R>((resolve, reject) =>
-			mapFn(item, i)
-				.then((result) => {
-					results[i] = result;
-
+		new Promise<void>((resolve, reject) =>
+			forEachFn(item, i)
+				.then(() => {
 					const isOutOfItems: boolean = index++ >= items.length - 1;
 
 					return isOutOfItems
@@ -48,5 +45,5 @@ export const map = <I, R>(
 			return iterablePromiseFn(items[i], i);
 		});
 
-	return Promise.all(rateLimitedProcessor).then(() => results);
+	return Promise.all(rateLimitedProcessor).then();
 };
