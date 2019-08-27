@@ -26,4 +26,16 @@ describe("awaitless", () => {
 				`${thing0}${thing1}${thing2}${thing3}${thing4}`
 		]).then((result) => expect(result).toBe("CatDogGiraffeCamelTurtle"));
 	});
+
+	it("Should have all other properties", () => {
+		const properties = Object.keys(awaitless);
+
+		expect(properties.length).toBe(5);
+
+		expect(awaitless.chain).toBeDefined();
+		expect(awaitless.forEach).toBeDefined();
+		expect(awaitless.map).toBeDefined();
+		expect(awaitless.toPromise).toBeDefined();
+		expect(awaitless.whilst).toBeDefined();
+	});
 });

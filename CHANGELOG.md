@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2019-08-27
+### Added
+- Added whilst.
+
+### Fixed
+- Fixed awaitless missing chain on the default export.
+
 ## [1.2.0] - 2019-08-23
 ### Added
 - Added forEach.
@@ -45,7 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added toPromise, map and chain utilities.
 
-[Unreleased]: https://github.com/leedavidcs/awaitless/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/leedavidcs/awaitless/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/leedavidcs/awaitless/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/leedavidcs/awaitless/compare/v1.1.3...v1.2.0
 [1.1.3]: https://github.com/leedavidcs/awaitless/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/leedavidcs/awaitless/compare/v1.1.1...v1.1.2
