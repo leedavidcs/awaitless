@@ -30,9 +30,10 @@ describe("awaitless", () => {
 	it("Should have all other properties", () => {
 		const properties = Object.keys(awaitless);
 
-		expect(properties.length).toBe(5);
+		expect(properties.length).toBe(6);
 
 		expect(awaitless.chain).toBeDefined();
+		expect(awaitless.doWhilst).toBeDefined();
 		expect(awaitless.forEach).toBeDefined();
 		expect(awaitless.map).toBeDefined();
 		expect(awaitless.toPromise).toBeDefined();

@@ -1,13 +1,12 @@
-import { whilst } from "../src";
+import { doWhilst } from "../src";
 
-describe("whilst", () => {
+describe("doWhilst", () => {
 	it("Should iterate successfully", () => {
 		expect.assertions(2);
 
 		const mock: jest.Mock = jest.fn();
 
-		return whilst<number>(
-			(value) => value !== null && value < 5,
+		return doWhilst<number>(
 			(value) => {
 				return new Promise<number>((resolve) => {
 					if (value === null) {
@@ -19,6 +18,7 @@ describe("whilst", () => {
 					setTimeout(() => resolve(++value), 500);
 				});
 			},
+			(value) => value !== null && value < 5,
 			{ initialValue: 0 }
 		).then((result) => {
 			expect(result).toBe(5);
@@ -29,8 +29,7 @@ describe("whilst", () => {
 	it("Should throw an error if maxRetry is hit first", () => {
 		expect.assertions(2);
 
-		return whilst<number>(
-			() => true,
+		return doWhilst<number>(
 			(value) => {
 				return new Promise<number>((resolve) => {
 					if (value === null) {
@@ -40,13 +39,14 @@ describe("whilst", () => {
 					setTimeout(() => resolve(++value), 500);
 				});
 			},
+			() => true,
 			{
 				initialValue: 0,
 				maxRetry: 5
 			}
 		).catch((err) => {
 			expect(err).toBeDefined();
-            expect(err.message).toBe("Reached maximum number of retries in whilst loop.");
+            expect(err.message).toBe("Reached maximum number of retries in doWhilst loop.");
             
             return null;
 		});

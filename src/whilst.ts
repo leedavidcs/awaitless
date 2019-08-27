@@ -1,25 +1,25 @@
 interface IWhilstOptions<T> {
-    initialValue: T;
-    maxRetry: number;
+	initialValue: T;
+	maxRetry: number;
 }
 
 const DEFAULT_OPTIONS: IWhilstOptions<any> = {
-    initialValue: null,
-    maxRetry: Infinity
+	initialValue: null,
+	maxRetry: Infinity
 };
 
 export const whilst = <T>(
 	condFn: (current: T | null) => Promise<boolean> | boolean,
-    fn: (current: T | null) => Promise<T> | T,
-    options?: Partial<IWhilstOptions<T | null>>
+	fn: (current: T | null) => Promise<T> | T,
+	options?: Partial<IWhilstOptions<T | null>>
 ): Promise<T | null> => {
-    const finalOptions = {
-        ...DEFAULT_OPTIONS,
-        ...options
-    };
+	const finalOptions = {
+		...DEFAULT_OPTIONS,
+		...options
+	};
 
-    let result: Promise<T | null> = Promise.resolve(finalOptions.initialValue);
-    let retryCount: number = 0;
+	let result: Promise<T | null> = Promise.resolve(finalOptions.initialValue);
+	let retryCount: number = 0;
 
 	const iterablePromiseFn = () =>
 		new Promise<T | null>((resolve, reject) => {
@@ -27,19 +27,19 @@ export const whilst = <T>(
 				Promise.resolve(condFn(current)).then((isOver) => {
 					if (!isOver) {
 						return resolve(result);
-                    }
-                    
-                    if (retryCount >= finalOptions.maxRetry) {
-                        reject(new Error("Reached maximum number of retries in whilst loop."));
-                    }
+					}
 
-                    result = Promise.resolve(fn(current));
-                    
-                    retryCount++;
-                    resolve(iterablePromiseFn());
+					if (retryCount >= finalOptions.maxRetry) {
+						reject(new Error("Reached maximum number of retries in whilst loop."));
+					}
+
+					result = Promise.resolve(fn(current));
+
+					retryCount++;
+					resolve(iterablePromiseFn());
 				})
 			);
-        });
-        
-    return iterablePromiseFn();
+		});
+
+	return iterablePromiseFn();
 };

@@ -14,9 +14,11 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
   /**
    * These exist:
    * - awaitless.chain
+   * - awaitless.doWhilst
    * - awaitless.forEach
    * - awaitless.map
    * - awaitless.toPromise
+   * - awaitless.whilst
    */
   
   awaitless([
@@ -101,6 +103,24 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
         }
     ]).then((result) => // result is the value of thing0);
     ```
+### `doWhilst(fn, condFn, options)`
+* description: The post-check version of whilst.
+* params
+  * `fn`: A function (typed `(currentValue: any) => any`) which is called each time `condFn` passes. Passes the previous return value of `fn`.
+  * `condFn`: A function which returns `Promise<boolean> | boolean` that takes the last return value of `fn` that is run after each execution of `fn`.
+  * `options`: An optional options object
+    * `initialValue` (any, default: null): The initial value to invoke `fn` with.
+    * `maxRetry` (number, default: Infinity): The number of times to retry, until an error is thrown.
+* example:
+  ```
+  import { doWhilst } from "awaitless";
+
+  doWhilst(
+    (current) => new Promise((resolve) => setTimeout(() => resolve(++current), 1000)),
+    (current) => current < 5,
+    { initialValue: 0 }
+  ).then((result) => // result === 5);
+  ```
 ### `forEach(items, promiseFn, options)`
 * description: Iterates over an array of items, and invokes a function that returns a promise for each item.
 * params
@@ -168,3 +188,22 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
       .then((result) => result === "Bobbathan_Dole")
       .catch((err) => console.log(err));
   ```
+### `whilst(condFn, fn, options)`
+* description: Repeatedly calls `fn` while `condFn` returns `true`. This returns that last return value of `fn`
+* params
+  * `condFn`: A function which returns `Promise<boolean> | boolean` that takes the last return value of `fn` that is run after each execution of `fn`.
+  * `fn`: A function (typed `(currentValue: any) => any`) which is called each time `condFn` passes. Passes the previous return value of `fn`.
+  * `options`: An optional options object
+    * `initialValue` (any, default: null): The initial value to invoke `fn` with.
+    * `maxRetry` (number, default: Infinity): The number of times to retry, until an error is thrown.
+* example:
+  ```
+  import { whilst } from "awaitless";
+
+  whilst(
+    (current) => current < 5,
+    (current) => new Promise((resolve) => setTimeout(() => resolve(++current), 1000)),
+    { initialValue: 0 }
+  ).then((result) => // result === 5);
+  ```
+  
