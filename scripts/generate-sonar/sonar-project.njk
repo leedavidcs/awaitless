@@ -1,10 +1,10 @@
 # must be unique in a given SonarQube instance
-sonar.projectKey={{ pkg.name }}
+sonar.projectKey=leedavidcs_{{ pkg.name }}
 
 # this is the name and version displayed in the SonarQube UI. Was mandatory prior to SonarQube 6.1.
 sonar.projectName={{ pkg.name }}
 sonar.projectVersion={{ pkg.version }}
-sonar.projectDescription=Starter for a frontend application
+sonar.projectDescription={{ pkg.description }}
  
 # Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
 # This property is optional if sonar.modules is set. 
