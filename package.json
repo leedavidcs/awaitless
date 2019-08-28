@@ -6,7 +6,7 @@
 	"types": "./dist/index.d.ts",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/dlee-onfleet/awaitless.git"
+		"url": "https://github.com/leedavidcs/awaitless.git"
 	},
 	"scripts": {
 		"build": "tsc --build",
@@ -15,7 +15,8 @@
 		"lint": "tslint --outputAbsolutePaths --project .",
 		"lint:fix": "npm run lint -- --fix",
 		"test": "jest",
-		"test:coverage": "npm test -- --coverage"
+		"test:coverage": "npm test -- --coverage",
+		"test:sonar": "ts-node scripts/generate-sonar && npm test -- --coverage --testResultsProcessor=jest-sonar-reporter"
 	},
 	"author": "leedavidcs",
 	"license": "MIT",
@@ -24,19 +25,35 @@
 		"@babel/preset-env": "^7.5.5",
 		"@babel/preset-typescript": "^7.3.3",
 		"@geut/chan": "^2.1.1",
+		"@types/fs-extra": "^8.0.0",
 		"@types/jest": "^24.0.17",
+		"@types/nunjucks": "^3.1.2",
+		"@types/read-pkg": "^5.1.0",
 		"babel-jest": "^24.8.0",
+		"fs-extra": "^8.1.0",
 		"jest": "^24.8.0",
+		"jest-sonar-reporter": "^2.0.0",
+		"nunjucks": "^3.2.0",
 		"prettier": "^1.18.2",
+		"read-pkg": "^5.2.0",
+		"ts-node": "^8.3.0",
 		"tslint": "^5.18.0",
 		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^3.5.3"
 	},
 	"jest": {
-		"collectCoverageFrom": [
-			"src/**/*.ts"
-		],
 		"coverageDirectory": "./coverage",
+		"collectCoverageFrom": [
+			"src/**/*.ts",
+			"!build/**/*",
+			"!config/**/*",
+			"!coverage/**/*",
+			"!logs/**/*",
+			"!dist/**/*",
+			"!scripts/**/*",
+			"!test-reports/**/*",
+			"!**/*.d.ts"
+		],
 		"coverageReporters": [
 			"cobertura",
 			"json",
@@ -49,18 +66,32 @@
 				"statements": 80
 			}
 		},
-		"moduleFileExtensions": [
-			"json",
-			"js",
-			"ts"
-		],
-		"testEnvironment": "node",
+		"resolver": "jest-pnp-resolver",
 		"testMatch": [
 			"<rootDir>/tests/**/*test.ts",
 			"<rootDir>/tests/**/*test/index.ts"
 		],
-		"testPathIgnorePatterns": [
-			"/node_modules"
+		"testEnvironment": "jsdom",
+		"testURL": "http://localhost",
+		"transformIgnorePatterns": [
+			"[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$"
+		],
+		"moduleFileExtensions": [
+			"web.js",
+			"js",
+			"web.ts",
+			"ts",
+			"web.tsx",
+			"tsx",
+			"json",
+			"web.jsx",
+			"jsx",
+			"node"
 		]
+	},
+	"jestSonar": {
+		"reportPath": "test-reports",
+		"reportFile": "sonar.xml",
+		"indent": 4
 	}
 }
