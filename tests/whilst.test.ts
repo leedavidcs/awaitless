@@ -16,7 +16,7 @@ describe("whilst", () => {
 
 					mock();
 
-					setTimeout(() => resolve(++value), 500);
+					setTimeout(() => resolve(++value), 200);
 				});
 			},
 			{ initialValue: 0 }
@@ -37,7 +37,7 @@ describe("whilst", () => {
 						value = 0;
 					}
 
-					setTimeout(() => resolve(++value), 500);
+					setTimeout(() => resolve(++value), 200);
 				});
 			},
 			{
@@ -46,9 +46,9 @@ describe("whilst", () => {
 			}
 		).catch((err) => {
 			expect(err).toBeDefined();
-            expect(err.message).toBe("Reached maximum number of retries in whilst loop.");
-            
-            return null;
+			expect(err.message).toBe("Reached maximum number of retries in whilst loop.");
+
+			return null;
 		});
 	});
 });

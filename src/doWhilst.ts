@@ -28,18 +28,18 @@ export const doWhilst = <T>(
 					reject(new Error("Reached maximum number of retries in doWhilst loop."));
 				}
 
-                result = Promise.resolve(fn(current));
-                
-                return Promise.resolve(result).then((next) =>
-                    Promise.resolve(condFn(next)).then((isOver) => {
-                        if (!isOver) {
-                            return resolve(result);
-                        }
-    
-                        retryCount++;
-                        resolve(iterablePromiseFn());
-                    })
-                );
+				result = Promise.resolve(fn(current));
+
+				return Promise.resolve(result).then((next) =>
+					Promise.resolve(condFn(next)).then((isOver) => {
+						if (!isOver) {
+							return resolve(result);
+						}
+
+						retryCount++;
+						resolve(iterablePromiseFn());
+					})
+				);
 			});
 		});
 

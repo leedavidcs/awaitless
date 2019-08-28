@@ -17,7 +17,7 @@ describe("forEach", () => {
 						mappedItems.push(`Mapped_${item}`);
 
 						resolve();
-					}, 1000);
+					}, 200);
 				})
 		).then(() => {
 			expect(mappedItems).toStrictEqual(["Mapped_Cat", "Mapped_Dog", "Mapped_Giraffe"]);
@@ -30,7 +30,7 @@ describe("forEach", () => {
 
 		const mock: jest.Mock = jest.fn();
 
-		return forEach([], () => new Promise((resolve) => setTimeout(resolve, 1000)))
+		return forEach([], () => new Promise((resolve) => setTimeout(resolve, 200)))
 			.then(mock)
 			.then(() => expect(mock).toBeCalled());
 	});
