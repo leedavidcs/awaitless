@@ -24,7 +24,8 @@ jobs:
     - stage: test
       addons:
         sonarcloud:
-          organization: leedavidcs
+          organization: leedavidcs-github
       script:
         - npm run test:sonar
         - sonar-scanner
+        - ./scripts/wait-sonar-quality-gate.sh $SONAR_TOKEN sonarcloud.io ./.scannerwork/report-task.txt
