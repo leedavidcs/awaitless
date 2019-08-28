@@ -1,4 +1,13 @@
 # Awaitless
+[![npm](https://img.shields.io/npm/v/awaitless)](https://www.npmjs.com/package/awaitless)
+[![GitHub](https://img.shields.io/github/license/leedavidcs/awaitless)](https://github.com/leedavidcs/awaitless)
+[![Build Status](https://travis-ci.com/leedavidcs/awaitless.svg?branch=master)](https://travis-ci.com/leedavidcs/awaitless)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=leedavidcs_awaitless&metric=alert_status)](https://sonarcloud.io/dashboard?id=leedavidcs_awaitless)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=leedavidcs_awaitless&metric=coverage)](https://sonarcloud.io/dashboard?id=leedavidcs_awaitless)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=leedavidcs_awaitless&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=leedavidcs_awaitless)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=leedavidcs_awaitless&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=leedavidcs_awaitless)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=leedavidcs_awaitless&metric=security_rating)](https://sonarcloud.io/dashboard?id=leedavidcs_awaitless)
+
 Awaitless is a lightweight, zero-dependency Promises utility that provides a set of useful operations on Promises, geared towards projects that do not have access to async-await.
 
 This is particularly useful for projects that transpile from a pre-ES6 versioned language, but target newer browsers or run on a more up-to-date version of Node that still supports Promises.
