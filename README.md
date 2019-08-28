@@ -119,7 +119,7 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
     (current) => new Promise((resolve) => setTimeout(() => resolve(++current), 1000)),
     (current) => current < 5,
     { initialValue: 0 }
-  ).then((result) => // result === 5);
+  ).then((result) => result === 5);
   ```
 ### `forEach(items, promiseFn, options)`
 * description: Iterates over an array of items, and invokes a function that returns a promise for each item.
@@ -204,6 +204,6 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
     (current) => current < 5,
     (current) => new Promise((resolve) => setTimeout(() => resolve(++current), 1000)),
     { initialValue: 0 }
-  ).then((result) => // result === 5);
+  ).then((result) => result === 5);
   ```
   
