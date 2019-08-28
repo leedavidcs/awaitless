@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - "node"
+cache: npm
+stages:
+  - audit
+  - lint
+  - format
+  - test
+
+script: echo "Starting CI pipeline"
+jobs:
+  include:
+    - stage: audit
+      script:
+      - if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then npm run audit-ci; fi
+
+    - stage: lint
+      script: npm run lint
+
+    - stage: format
+      script: npm run format
+
+    - stage: test
+      addons:
+        sonarcloud:
+          organization: leedavidcs
+      script:
+        - npm run test:sonar
+        - sonar-scanner
