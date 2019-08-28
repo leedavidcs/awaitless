@@ -16,6 +16,7 @@
 		"lint": "tslint --outputAbsolutePaths --project .",
 		"lint:fix": "npm run lint -- --fix",
 		"test": "jest",
+		"test:ci": "npm run audit-ci && npm run lint && npm run format && npm run test:sonar",
 		"test:coverage": "npm test -- --coverage",
 		"test:sonar": "ts-node scripts/generate-sonar && npm test -- --coverage --testResultsProcessor=jest-sonar-reporter"
 	},
