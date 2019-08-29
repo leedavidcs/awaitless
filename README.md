@@ -22,6 +22,7 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
     + [doWhilst](#`doWhilst(fn,-condFn,-options)`)
     + [forEach](#`forEach(items,-promiseFn,-options)`)
     + [map](#`map(items,-promiseFn,-options)`)
+    + [reduce](#`reduce(items,-reduceFn,-initialValue)`)
     + [toPromise](#`toPromise(fn,-thisArg)`)
     + [whilst](#`whilst(condFn,-fn,-options)`)
 
