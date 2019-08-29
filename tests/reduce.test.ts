@@ -50,39 +50,47 @@ describe("reduce", () => {
 			expect(err).toBeDefined();
 			expect(mock).not.toBeCalled();
 		});
-    });
-    
-    it("Should reduce with an initial item", () => {
-        expect.assertions(2);
+	});
 
-        const mock: jest.Mock = jest.fn();
+	it("Should reduce with an initial item", () => {
+		expect.assertions(2);
 
-        return reduce<number, string>([1, 2, 3], (acc, item) => {
-            return new Promise<string>((resolve) => {
-                mock();
+		const mock: jest.Mock = jest.fn();
 
-                setTimeout(() => resolve(`${acc}${item}`), 200);
-            });
-        }, "").then((result) => {
-            expect(result).toStrictEqual("123");
-            expect(mock).toBeCalledTimes(3);
-        });
-    });
+		return reduce<number, string>(
+			[1, 2, 3],
+			(acc, item) => {
+				return new Promise<string>((resolve) => {
+					mock();
 
-    it("Should resolve with initial item, if empty array", () => {
-        expect.assertions(2);
+					setTimeout(() => resolve(`${acc}${item}`), 200);
+				});
+			},
+			""
+		).then((result) => {
+			expect(result).toStrictEqual("123");
+			expect(mock).toBeCalledTimes(3);
+		});
+	});
 
-        const mock: jest.Mock = jest.fn();
+	it("Should resolve with initial item, if empty array", () => {
+		expect.assertions(2);
 
-        return reduce<number, string>([], (acc, item) => {
-            return new Promise<string>((resolve) => {
-                mock();
+		const mock: jest.Mock = jest.fn();
 
-                setTimeout(() => resolve(`${acc}${item}`), 200);
-            });
-        }, "").then((result) => {
-            expect(result).toStrictEqual("");
-            expect(mock).toBeCalledTimes(0);
-        });
-    });
+		return reduce<number, string>(
+			[],
+			(acc, item) => {
+				return new Promise<string>((resolve) => {
+					mock();
+
+					setTimeout(() => resolve(`${acc}${item}`), 200);
+				});
+			},
+			""
+		).then((result) => {
+			expect(result).toStrictEqual("");
+			expect(mock).toBeCalledTimes(0);
+		});
+	});
 });
