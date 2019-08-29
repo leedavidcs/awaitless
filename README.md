@@ -15,6 +15,7 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
 ### Table of Contents
 - [Awaitless](#awaitless)
     + [Table of Contents](#table-of-contents)
+  * [Notes](#notes)
   * [Documentation](#documentation)
     + [awaitless](#`awaitless(promiseFuncs)`)
     + [chain](#`chain(promiseFuncs)`)
@@ -23,6 +24,13 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
     + [map](#`map(items,-promiseFn,-options)`)
     + [toPromise](#`toPromise(fn,-thisArg)`)
     + [whilst](#`whilst(condFn,-fn,-options)`)
+
+## Notes
+This module does not supply a promises implementation, but only provides a set of useful operations for promises. It is recommended to take any of the [many promises implementations](https://github.com/promises-aplus/promises-spec/blob/master/implementations.md#standalone) before using this module, if your project does not have promises already.
+
+This project uses `Promise` directly, so if you are using a promises implementation, make sure to overwrite `Promise` to the implementation you've chosen.
+
+This project implements none of the provided functions using async/await.
 
 ## Documentation
 
@@ -184,6 +192,22 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
       (value) => new Promise((resolve) => setTimeout(() => resolve(value), value)),
       { concurrency: 2 }
     ).then((result) => // result is [300, 200, 100]);
+  ```
+### `reduce(items, reduceFn, initialValue)`
+* description: Iterates over an array of items, and invokes a reducer function that returns a promise to reduce the items. This is nearly identical to [`Array.reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce), except is designed to work with a promise function.
+* params
+  * `items`: An array of anything
+  * `reduceFn`: A function (typed `(accumulator: any, item: any, index: number) => Promise<any>`), that gets invoked with the current accumulated value and each item.
+  * `initialValue`: An optional initial value to use as the first argument to the `reduceFn`. If undefined, the first element will be used as the `initialValue` and skipped in the first call of the `reduceFn`.
+* example:
+  ```ts
+  import { reduce } from "awaitless";
+
+  reduce(
+    [1, 2, 3],
+    (acc, item) => new Promise((resolve) => setTimeout(() => resolve(`${acc}${item}`), 1000)),
+    ""
+  ).then((result) => result === "123");
   ```
 ### `toPromise(fn, thisArg)`
 * description: Converts a callback function to a promise function.

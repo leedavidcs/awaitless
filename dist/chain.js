@@ -28,7 +28,7 @@ exports.chain = function (promiseFuncs) {
                     .then(function (values) {
                     values.forEach(function (value, i) {
                         if (isBreak(value)) {
-                            throw new Error("Cannot break in an accumulator object");
+                            return reject(new Error("Cannot break in an accumulator object"));
                         }
                         results[keys_1[i]] = value;
                     });

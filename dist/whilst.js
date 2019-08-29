@@ -16,7 +16,7 @@ var DEFAULT_OPTIONS = {
     maxRetry: Infinity
 };
 exports.whilst = function (condFn, fn, options) {
-    var finalOptions = __assign({}, DEFAULT_OPTIONS, options);
+    var finalOptions = __assign(__assign({}, DEFAULT_OPTIONS), options);
     var result = Promise.resolve(finalOptions.initialValue);
     var retryCount = 0;
     var iterablePromiseFn = function () {

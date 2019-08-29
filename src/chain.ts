@@ -67,7 +67,7 @@ export const chain = <A extends { [key: string]: any }, R>(
 					.then((values) => {
 						values.forEach((value, i) => {
 							if (isBreak<A[keyof A]>(value)) {
-								throw new Error("Cannot break in an accumulator object");
+								return reject(new Error("Cannot break in an accumulator object"));
 							}
 
 							results[keys[i]] = value;
