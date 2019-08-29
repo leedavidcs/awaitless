@@ -17,14 +17,14 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
     + [Table of Contents](#table-of-contents)
   * [Notes](#notes)
   * [Documentation](#documentation)
-    + [awaitless](#`awaitless(promiseFuncs)`)
-    + [chain](#`chain(promiseFuncs)`)
-    + [doWhilst](#`doWhilst(fn,-condFn,-options)`)
-    + [forEach](#`forEach(items,-promiseFn,-options)`)
-    + [map](#`map(items,-promiseFn,-options)`)
-    + [reduce](#`reduce(items,-reduceFn,-initialValue)`)
-    + [toPromise](#`toPromise(fn,-thisArg)`)
-    + [whilst](#`whilst(condFn,-fn,-options)`)
+    + [default](#default)
+    + [chain](#chain)
+    + [doWhilst](#doWhilst)
+    + [forEach](#forEach)
+    + [map](#map)
+    + [reduce](#reduce)
+    + [toPromise](#toPromise)
+    + [whilst](#whilst)
 
 ## Notes
 This module does not supply a promises implementation, but only provides a set of useful operations for promises. It is recommended to take any of the [many promises implementations](https://github.com/promises-aplus/promises-spec/blob/master/implementations.md#standalone) before using this module, if your project does not have promises already.
@@ -35,7 +35,8 @@ This project implements none of the provided functions using async/await.
 
 ## Documentation
 
-### `awaitless(promiseFuncs)`
+### default
+* method: `default(promiseFuncs)`
 * description: This is the same as `chain`, but can also be used to access any of the methods below:
 * params: (see `chain`)
 * example:
@@ -67,7 +68,8 @@ This project implements none of the provided functions using async/await.
           `${thing0}${thing1}${thing2}${thing3}${thing4}`
   ]).then((result) => result === "CatDogGiraffeCamelTurtle");
   ```
-### `chain(promiseFuncs)`
+### chain
+* method: `chain(promiseFuncs)`
 * description: This is functionally the same as promise chaining, but supports a clean signature for parallelly ran promises, variable assignment, and breaking and returning early out of the promise chain.
 * params:
   * `promiseFuncs`: An array of either objects mapped to functions, or functions.
@@ -136,7 +138,8 @@ This project implements none of the provided functions using async/await.
         // result is the value of thing0
     );
     ```
-### `doWhilst(fn, condFn, options)`
+### dpWhilst
+* method: `doWhilst(fn, condFn, options)`
 * description: The post-check version of whilst.
 * params
   * `fn`: A function (typed `(currentValue: any) => any`) which is called each time `condFn` passes. Passes the previous return value of `fn`.
@@ -154,7 +157,8 @@ This project implements none of the provided functions using async/await.
     { initialValue: 0 }
   ).then((result) => result === 5);
   ```
-### `forEach(items, promiseFn, options)`
+### forEach
+* method: `forEach(items, promiseFn, options)`
 * description: Iterates over an array of items, and invokes a function that returns a promise for each item.
 * params
   * `items`: An array of anything
@@ -177,7 +181,8 @@ This project implements none of the provided functions using async/await.
       { concurrency: 2 }
     ).then(() => // result is [200, 300, 100]);
   ```
-### `map(items, promiseFn, options)`
+### map
+* method: `map(items, promiseFn, options)`
 * description: Iterates over an array of items, and invokes a function that returns a promise to map each item. This will return items in the same order, regardless of what order the items complete.
 * params
   * `items`: An array of anything
@@ -194,7 +199,8 @@ This project implements none of the provided functions using async/await.
       { concurrency: 2 }
     ).then((result) => // result is [300, 200, 100]);
   ```
-### `reduce(items, reduceFn, initialValue)`
+### reduce
+* method: `reduce(items, reduceFn, initialValue)`
 * description: Iterates over an array of items, and invokes a reducer function that returns a promise to reduce the items. This is nearly identical to [`Array.reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce), except is designed to work with a promise function.
 * params
   * `items`: An array of anything
@@ -210,7 +216,8 @@ This project implements none of the provided functions using async/await.
     ""
   ).then((result) => result === "123");
   ```
-### `toPromise(fn, thisArg)`
+### toPromise
+* method: `toPromise(fn, thisArg)`
 * description: Converts a callback function to a promise function.
 * params
   * `fn`: A function with a callback (typed as `(err: Error | string | null, result: any) => void`) as a last parameter.
@@ -237,7 +244,8 @@ This project implements none of the provided functions using async/await.
       .then((result) => result === "Bobbathan_Dole")
       .catch((err) => console.log(err));
   ```
-### `whilst(condFn, fn, options)`
+### whilst
+* method: `whilst(condFn, fn, options)`
 * description: Repeatedly calls `fn` while `condFn` returns `true`. This returns that last return value of `fn`
 * params
   * `condFn`: A function which returns `Promise<boolean> | boolean` that takes the last return value of `fn` that is run after each execution of `fn`.
