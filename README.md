@@ -12,12 +12,25 @@ Awaitless is a lightweight, zero-dependency Promises utility that provides a set
 
 This is particularly useful for projects that transpile from a pre-ES6 versioned language, but target newer browsers or run on a more up-to-date version of Node that still supports Promises.
 
+### Table of Contents
+- [Awaitless](#awaitless)
+    + [Table of Contents](#table-of-contents)
+  * [Documentation](#documentation)
+    + [awaitless](#`awaitless(promiseFuncs)`)
+    + [chain](#`chain(promiseFuncs)`)
+    + [doWhilst](#`doWhilst(fn,-condFn,-options)`)
+    + [forEach](#`forEach(items,-promiseFn,-options)`)
+    + [map](#`map(items,-promiseFn,-options)`)
+    + [toPromise](#`toPromise(fn,-thisArg)`)
+    + [whilst](#`whilst(condFn,-fn,-options)`)
+
 ## Documentation
+
 ### `awaitless(promiseFuncs)`
 * description: This is the same as `chain`, but can also be used to access any of the methods below:
 * params: (see `chain`)
 * example:
-  ```
+  ```ts
   import awaitless from "awaitless";
   
   /**
@@ -51,7 +64,7 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
   * `promiseFuncs`: An array of either objects mapped to functions, or functions.
 * example:
   * Standard use:
-    ```
+    ```ts
     import { chain } from "awaitless";
 
     chain([
@@ -73,7 +86,7 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
     ]).then((result) => result === "CatDogGiraffeCatfishTurtle");
     ```
   * Breaking the promise chain:
-    ```
+    ```ts
     import { chain } from "awaitless";
 
     chain([
@@ -87,7 +100,7 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
     ]).then((result) => result === "Dog");
     ```
   * Assigning manually (not recommended):
-    ```
+    ```ts
     import { chain } from "awaitless";
 
     chain([
@@ -110,7 +123,9 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
                 return thing0;
             }
         }
-    ]).then((result) => // result is the value of thing0);
+    ]).then((result) =>
+        // result is the value of thing0
+    );
     ```
 ### `doWhilst(fn, condFn, options)`
 * description: The post-check version of whilst.
@@ -118,10 +133,10 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
   * `fn`: A function (typed `(currentValue: any) => any`) which is called each time `condFn` passes. Passes the previous return value of `fn`.
   * `condFn`: A function which returns `Promise<boolean> | boolean` that takes the last return value of `fn` that is run after each execution of `fn`.
   * `options`: An optional options object
-    * `initialValue` (any, default: null): The initial value to invoke `fn` with.
-    * `maxRetry` (number, default: Infinity): The number of times to retry, until an error is thrown.
+    * `initialValue` (`any`, default: `null`): The initial value to invoke `fn` with.
+    * `maxRetry` (`number`, default: `Infinity`): The number of times to retry, until an error is thrown.
 * example:
-  ```
+  ```ts
   import { doWhilst } from "awaitless";
 
   doWhilst(
@@ -136,9 +151,9 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
   * `items`: An array of anything
   * `promiseFn`: A function (typed `(item: any, index: number) => void`), that gets invoked with each item
   * `options`: An optional options object
-    * `concurrency` (number, default: 1): Runs the `promiseFn` with the specified concurrency limit. If everything should be parallel, set this to `Infinity`.
+    * `concurrency` (`number`, default: `1`): Runs the `promiseFn` with the specified concurrency limit. If everything should be parallel, set this to `Infinity`.
 * example
-  ```
+  ```ts
   import { forEach } from "awaitless";
 
   const result = [];
@@ -159,9 +174,9 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
   * `items`: An array of anything
   * `promiseFn`: A function (typed `(item: any, index: number) => any`), that gets invoked with each item
   * `options`: An optional options object
-    * `concurrency` (number, default: 1): Runs the `promiseFn` with the specified concurrency limit. If everything should be parallel, set this to `Infinity`.
+    * `concurrency` (`number`, default: `1`): Runs the `promiseFn` with the specified concurrency limit. If everything should be parallel, set this to `Infinity`.
 * example
-  ```
+  ```ts
   import { map } from "awaitless";
 
   map(
@@ -176,7 +191,7 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
   * `fn`: A function with a callback (typed as `(err: Error | string | null, result: any) => void`) as a last parameter.
   * `thisArg?`: An object to bind `this` to, if needed
 * example:
-  ```
+  ```ts
   import { toPromise } from "awaitless";
   
   const fnWithCallback = (firstName, lastName, callback) => {
@@ -203,10 +218,10 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
   * `condFn`: A function which returns `Promise<boolean> | boolean` that takes the last return value of `fn` that is run after each execution of `fn`.
   * `fn`: A function (typed `(currentValue: any) => any`) which is called each time `condFn` passes. Passes the previous return value of `fn`.
   * `options`: An optional options object
-    * `initialValue` (any, default: null): The initial value to invoke `fn` with.
-    * `maxRetry` (number, default: Infinity): The number of times to retry, until an error is thrown.
+    * `initialValue` (`any`, default: `null`): The initial value to invoke `fn` with.
+    * `maxRetry` (`number`, default: `Infinity`): The number of times to retry, until an error is thrown.
 * example:
-  ```
+  ```ts
   import { whilst } from "awaitless";
 
   whilst(
