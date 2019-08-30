@@ -17,7 +17,7 @@ var DEFAULT_OPTIONS = {
 exports.map = function (items, mapFn, options) {
     var concurrency = __assign(__assign({}, DEFAULT_OPTIONS), options).concurrency;
     if (items.length === 0) {
-        return new Promise(function (resolve) { return resolve([]); });
+        return Promise.resolve([]);
     }
     var results = Array(items.length).fill(null);
     var trueConcurrencyLimit = Math.min(items.length, concurrency);

@@ -17,7 +17,7 @@ var DEFAULT_OPTIONS = {
 exports.forEach = function (items, forEachFn, options) {
     var concurrency = __assign(__assign({}, DEFAULT_OPTIONS), options).concurrency;
     if (items.length === 0) {
-        return new Promise(function (resolve) { return resolve(); });
+        return Promise.resolve();
     }
     var trueConcurrencyLimit = Math.min(items.length, concurrency);
     var index;
