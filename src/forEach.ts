@@ -17,7 +17,7 @@ export const forEach = <I>(
 	};
 
 	if (items.length === 0) {
-		return new Promise((resolve) => resolve());
+		return Promise.resolve();
 	}
 
 	const trueConcurrencyLimit: number = Math.min(items.length, concurrency);

@@ -17,7 +17,7 @@ export const map = <I, R>(
 	};
 
 	if (items.length === 0) {
-		return new Promise((resolve) => resolve([]));
+		return Promise.resolve([]);
 	}
 
 	const results: R[] = Array(items.length).fill(null);

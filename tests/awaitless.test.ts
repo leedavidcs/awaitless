@@ -14,13 +14,13 @@ describe("awaitless", () => {
 		>([
 			{
 				thing0: () => "Cat",
-				thing1: () => new Promise((resolve) => setTimeout(() => resolve("Dog"), 1000)),
-				thing2: () => new Promise((resolve) => setTimeout(() => resolve("Giraffe"), 2000))
+				thing1: () => new Promise((resolve) => setTimeout(() => resolve("Dog"), 100)),
+				thing2: () => new Promise((resolve) => setTimeout(() => resolve("Giraffe"), 200))
 			},
 			({ thing0, thing2 }) => expect(`${thing0}${thing2}`).toBe("CatGiraffe"),
 			{
 				thing3: () => "Camel",
-				thing4: () => new Promise((resolve) => setTimeout(() => resolve("Turtle"), 1000))
+				thing4: () => new Promise((resolve) => setTimeout(() => resolve("Turtle"), 100))
 			},
 			({ thing0, thing1, thing2, thing3, thing4 }) =>
 				`${thing0}${thing1}${thing2}${thing3}${thing4}`
@@ -30,14 +30,15 @@ describe("awaitless", () => {
 	it("Should have all other properties", () => {
 		const properties = Object.keys(awaitless);
 
-		expect(properties.length).toBe(7);
+		expect(properties.length).toBe(8);
 
 		expect(awaitless.chain).toBeDefined();
 		expect(awaitless.doWhilst).toBeDefined();
+		expect(awaitless.filter).toBeDefined();
 		expect(awaitless.forEach).toBeDefined();
 		expect(awaitless.map).toBeDefined();
+		expect(awaitless.reduce).toBeDefined();
 		expect(awaitless.toPromise).toBeDefined();
 		expect(awaitless.whilst).toBeDefined();
-		expect(awaitless.reduce).toBeDefined();
 	});
 });

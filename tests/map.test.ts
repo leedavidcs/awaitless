@@ -12,7 +12,7 @@ describe("map", () => {
 				new Promise<string>((resolve) => {
 					mock();
 
-					setTimeout(() => resolve(`Mapped_${item}`), 1000);
+					setTimeout(() => resolve(`Mapped_${item}`), 200);
 				})
 		).then((mappedItems) => {
 			expect(mappedItems).toStrictEqual(["Mapped_Cat", "Mapped_Dog", "Mapped_Giraffe"]);
@@ -25,7 +25,7 @@ describe("map", () => {
 
 		const mock: jest.Mock = jest.fn();
 
-		return map([], () => new Promise((resolve) => setTimeout(resolve, 1000)))
+		return map([], () => new Promise((resolve) => setTimeout(resolve, 200)))
 			.then(mock)
 			.then(() => expect(mock).toBeCalled());
 	});
