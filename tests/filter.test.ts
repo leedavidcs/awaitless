@@ -33,28 +33,29 @@ describe("filter", () => {
 
 					setTimeout(resolve, 200);
 				})
-        )
-            .then((result) => expect(result).toEqual([]))
+		)
+			.then((result) => expect(result).toEqual([]))
 			.then(mock)
 			.then(() => expect(mock).toBeCalledTimes(1));
-    });
-    
-    it("Should preserve order when filtering concurrently", () => {
-        expect.assertions(2);
+	});
 
-        const mock: jest.Mock = jest.fn();
+	it("Should preserve order when filtering concurrently", () => {
+		expect.assertions(2);
 
-        return filter(
-            [50, 20, 300, 30, 100],
-            (item) => new Promise<boolean>((resolve) => {
-                mock();
+		const mock: jest.Mock = jest.fn();
 
-                setTimeout(() => resolve(item >= 50), item);
-            }),
-            { concurrency: 2 }
-        ).then((result) => {
-            expect(result).toEqual([50, 300, 100]);
-            expect(mock).toBeCalledTimes(5);
-        });
-    });
+		return filter(
+			[50, 20, 300, 30, 100],
+			(item) =>
+				new Promise<boolean>((resolve) => {
+					mock();
+
+					setTimeout(() => resolve(item >= 50), item);
+				}),
+			{ concurrency: 2 }
+		).then((result) => {
+			expect(result).toEqual([50, 300, 100]);
+			expect(mock).toBeCalledTimes(5);
+		});
+	});
 });
