@@ -19,12 +19,12 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
   * [Documentation](#documentation)
     + [default](#default)
     + [chain](#chain)
-    + [doWhilst](#doWhilst)
+    + [doWhilst](#dowhilst)
     + [filter](#filter)
-    + [forEach](#forEach)
+    + [forEach](#foreach)
     + [map](#map)
     + [reduce](#reduce)
-    + [toPromise](#toPromise)
+    + [toPromise](#topromise)
     + [whilst](#whilst)
 
 ## Notes
