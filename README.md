@@ -7,6 +7,7 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=leedavidcs_awaitless&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=leedavidcs_awaitless)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=leedavidcs_awaitless&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=leedavidcs_awaitless)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=leedavidcs_awaitless&metric=security_rating)](https://sonarcloud.io/dashboard?id=leedavidcs_awaitless)
+[![TypeScript](https://badgen.net/badge/icon/TypeScript?icon=typescript&label)](https://www.typescriptlang.org/index.html)
 
 Awaitless is a lightweight, zero-dependency Promises utility that provides a set of useful operations on Promises, geared towards projects that do not have access to async-await.
 
