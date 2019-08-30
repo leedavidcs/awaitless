@@ -20,6 +20,7 @@ This is particularly useful for projects that transpile from a pre-ES6 versioned
     + [default](#default)
     + [chain](#chain)
     + [doWhilst](#doWhilst)
+    + [filter](#filter)
     + [forEach](#forEach)
     + [map](#map)
     + [reduce](#reduce)
@@ -73,6 +74,7 @@ This project implements none of the provided functions using async/await.
 * description: This is functionally the same as promise chaining, but supports a clean signature for parallelly ran promises, variable assignment, and breaking and returning early out of the promise chain.
 * params:
   * `promiseFuncs`: An array of either objects mapped to functions, or functions.
+* returns: `Promise<any>`
 * example:
   * Standard use:
     ```ts
@@ -138,15 +140,16 @@ This project implements none of the provided functions using async/await.
         // result is the value of thing0
     );
     ```
-### dpWhilst
-* method: `doWhilst(fn, condFn, options)`
+### doWhilst
+* method: `doWhilst(promiseFn, condFn, options)`
 * description: The post-check version of whilst.
-* params
-  * `fn`: A function (typed `(currentValue: any) => any`) which is called each time `condFn` passes. Passes the previous return value of `fn`.
-  * `condFn`: A function which returns `Promise<boolean> | boolean` that takes the last return value of `fn` that is run after each execution of `fn`.
+* params:
+  * `promiseFn`: A function (typed `(currentValue: any) => Promise<any>`) which is called each time `condFn` passes. Passes the previous return value of `promiseFn`.
+  * `condFn`: A function which returns `Promise<boolean> | boolean` that takes the last return value of `promiseFn` that is run after each execution of `promiseFn`.
   * `options`: An optional options object
-    * `initialValue` (`any`, default: `null`): The initial value to invoke `fn` with.
+    * `initialValue` (`any`, default: `null`): The initial value to invoke `promiseFn` with.
     * `maxRetry` (`number`, default: `Infinity`): The number of times to retry, until an error is thrown.
+* returns: `Promise<any>`
 * example:
   ```ts
   import { doWhilst } from "awaitless";
@@ -157,14 +160,24 @@ This project implements none of the provided functions using async/await.
     { initialValue: 0 }
   ).then((result) => result === 5);
   ```
+### filter
+* method: `filter(items, filterFn, options)`
+* description: Iterates over an array of items, and invokes a filter function that returns a boolean promise to determine whether to filter each time. Filtered items maintain their original order (this is not the same as index, because the result array will be of equal or smaller length).
+* params:
+  * `items`: An array of anything
+  * `filterFn`: A function (typed `(item: any, index: number) => Promise<boolean>`) that gets invoked with each item.
+  * `options`: An optional options object
+    * `concurrency` (`number`, default: `1`): Runs the `filterFn` with the specified concurrency limit. If everything should be parallel, set this to `Infinity`. `filter` will still respect the original order of items, regardless of when order each item is completed.
+* returns: `Promise<any[]>`
 ### forEach
 * method: `forEach(items, promiseFn, options)`
 * description: Iterates over an array of items, and invokes a function that returns a promise for each item.
-* params
+* params:
   * `items`: An array of anything
-  * `promiseFn`: A function (typed `(item: any, index: number) => void`), that gets invoked with each item
+  * `promiseFn`: A function (typed `(item: any, index: number) => Promise<void>`), that gets invoked with each item
   * `options`: An optional options object
     * `concurrency` (`number`, default: `1`): Runs the `promiseFn` with the specified concurrency limit. If everything should be parallel, set this to `Infinity`.
+* returns: `Promise<void>`
 * example
   ```ts
   import { forEach } from "awaitless";
@@ -184,11 +197,12 @@ This project implements none of the provided functions using async/await.
 ### map
 * method: `map(items, promiseFn, options)`
 * description: Iterates over an array of items, and invokes a function that returns a promise to map each item. This will return items in the same order, regardless of what order the items complete.
-* params
+* params:
   * `items`: An array of anything
-  * `promiseFn`: A function (typed `(item: any, index: number) => any`), that gets invoked with each item
+  * `promiseFn`: A function (typed `(item: any, index: number) => Promise<any>`), that gets invoked with each item
   * `options`: An optional options object
     * `concurrency` (`number`, default: `1`): Runs the `promiseFn` with the specified concurrency limit. If everything should be parallel, set this to `Infinity`.
+* returns: `Promise<any[]>`
 * example
   ```ts
   import { map } from "awaitless";
@@ -202,10 +216,11 @@ This project implements none of the provided functions using async/await.
 ### reduce
 * method: `reduce(items, reduceFn, initialValue)`
 * description: Iterates over an array of items, and invokes a reducer function that returns a promise to reduce the items. This is nearly identical to [`Array.reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce), except is designed to work with a promise function.
-* params
+* params:
   * `items`: An array of anything
   * `reduceFn`: A function (typed `(accumulator: any, item: any, index: number) => Promise<any>`), that gets invoked with the current accumulated value and each item.
   * `initialValue`: An optional initial value to use as the first argument to the `reduceFn`. If undefined, the first element will be used as the `initialValue` and skipped in the first call of the `reduceFn`.
+* returns: `Promise<any>`
 * example:
   ```ts
   import { reduce } from "awaitless";
@@ -219,9 +234,10 @@ This project implements none of the provided functions using async/await.
 ### toPromise
 * method: `toPromise(fn, thisArg)`
 * description: Converts a callback function to a promise function.
-* params
+* params:
   * `fn`: A function with a callback (typed as `(err: Error | string | null, result: any) => void`) as a last parameter.
   * `thisArg?`: An object to bind `this` to, if needed
+* returns: `(...args: any[]) => Promise<any>`
 * example:
   ```ts
   import { toPromise } from "awaitless";
@@ -245,14 +261,15 @@ This project implements none of the provided functions using async/await.
       .catch((err) => console.log(err));
   ```
 ### whilst
-* method: `whilst(condFn, fn, options)`
-* description: Repeatedly calls `fn` while `condFn` returns `true`. This returns that last return value of `fn`
-* params
-  * `condFn`: A function which returns `Promise<boolean> | boolean` that takes the last return value of `fn` that is run after each execution of `fn`.
-  * `fn`: A function (typed `(currentValue: any) => any`) which is called each time `condFn` passes. Passes the previous return value of `fn`.
+* method: `whilst(condFn, promiseFn, options)`
+* description: Repeatedly calls `promiseFn` while `condFn` returns `true`. This returns that last return value of `promiseFn`
+* params:
+  * `condFn`: A function which returns `Promise<boolean> | boolean` that takes the last return value of `promiseFn` that is run after each execution of `promiseFn`.
+  * `promiseFn`: A function (typed `(currentValue: any) => Promise<any>`) which is called each time `condFn` passes. Passes the previous return value of `promiseFn`.
   * `options`: An optional options object
-    * `initialValue` (`any`, default: `null`): The initial value to invoke `fn` with.
+    * `initialValue` (`any`, default: `null`): The initial value to invoke `promiseFn` with.
     * `maxRetry` (`number`, default: `Infinity`): The number of times to retry, until an error is thrown.
+* returns: `Promise<any>`
 * example:
   ```ts
   import { whilst } from "awaitless";
