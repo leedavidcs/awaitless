@@ -14,7 +14,7 @@ export * from "./map";
 export * from "./reduce";
 export * from "./toPromise";
 export * from "./whilst";
-declare type Awaitless = typeof chain & {
+export declare type Awaitless = typeof chain & {
     chain: typeof chain;
     doWhilst: typeof doWhilst;
     filter: typeof filter;
