@@ -1,6 +1,6 @@
 {
 	"name": "awaitless",
-	"version": "1.6.0",
+	"version": "1.6.1",
 	"description": "A promise utility module for projects that have access to Promises, but do not have access to async-await.",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
