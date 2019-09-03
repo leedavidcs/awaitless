@@ -1,4 +1,4 @@
-interface IWhilstOptions<T> {
+export interface IWhilstOptions<T> {
 	initialValue: T;
 	maxRetry: number;
 }

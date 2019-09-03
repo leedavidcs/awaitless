@@ -1,4 +1,4 @@
-interface IDoWhilstOptions<T> {
+export interface IDoWhilstOptions<T> {
 	initialValue: T;
 	maxRetry: number;
 }

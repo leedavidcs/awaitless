@@ -1,4 +1,4 @@
-interface IForEachOptions {
+export interface IForEachOptions {
 	concurrency: number;
 }
 

@@ -1,4 +1,4 @@
-interface IMapOptions {
+export interface IMapOptions {
 	concurrency: number;
 }
 

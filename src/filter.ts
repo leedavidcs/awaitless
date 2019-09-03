@@ -1,4 +1,4 @@
-interface IFilterOptions {
+export interface IFilterOptions {
 	concurrency: number;
 }
 

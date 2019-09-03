@@ -1,14 +1,14 @@
-interface IChainPromiseFuncOps<A extends { [key: string]: any }, T = any> {
+export interface IChainPromiseFuncOps<A extends { [key: string]: any }, T = any> {
 	$assign: (key: keyof Partial<A>, value: T) => void;
 	$break: (value: T) => IBreakValue<T>;
 }
 
-type ChainPromiseFunc<A extends { [key: string]: any }, T> = (
+export type ChainPromiseFunc<A extends { [key: string]: any }, T> = (
 	acc: Partial<A>,
 	ops: IChainPromiseFuncOps<A, T>
 ) => T | Promise<T> | IBreakValue<T>;
 
-type ChainAccumulator<A extends { [key in keyof Partial<A>]: any }> = {
+export type ChainAccumulator<A extends { [key in keyof Partial<A>]: any }> = {
 	[key in keyof Partial<A>]: ChainPromiseFunc<A, A[key]>;
 };
 
